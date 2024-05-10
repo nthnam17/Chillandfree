@@ -4502,7 +4502,6 @@ input[type="button"].btn-block {
   display: flex;
   -ms-flex-direction: column;
   flex-direction: column;
-    box-shadow: 3px 5px 7px rgba(0,0,0,0.5);
 }
 
 .card-group > .card {
@@ -6042,7 +6041,7 @@ button.close {
 }
 
 .bg-primary {
-  background-color: #fff !important;
+  background-color: #20a8d8 !important;
 }
 
 a.bg-primary:hover, a.bg-primary:focus,
@@ -10751,7 +10750,7 @@ button {
 }
 
 .card.bg-primary {
-  border-color: transparent;
+  border-color: #187da0;
 }
 
 .card.bg-primary .card-header {
@@ -14457,10 +14456,12 @@ body {
 }
 /*# sourceMappingURL=style.css.map */
 
-.bg-login {
-  background-image: url(../img/pexels-jane-doan-1024248.jpg);
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-}
+/*.auth-mic {*/
+/*    background: url("/admin/img/nen_BVH_1.jpg") no-repeat no-repeat center center fixed;*/
+/*    height: 100%;*/
+/*    background-size: 100% 100%;*/
+/*}*/
+
+
 
 

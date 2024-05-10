@@ -25,12 +25,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     });
 
 
-    // system
-    Route::group(['prefix' => 'system'], function () {
-        // roles
-        Route::group(['prefix' => 'role'], function () {
+    // system roles
+    Route::group(['prefix' => 'system/role'], function () {
             Route::get('/', [App\Http\Controllers\Admin\DashboardController::class, 'index']);
-        });
     });
 });
 

@@ -359,12 +359,12 @@ function setupEventAddNewOneRowDataToDb() {
     });
 }
 
-$(document).on('change', '#modal-form input, #modal-form select, #modal-form textarea', function(e) {
-    e.preventDefault();
-    $(this).removeClass('invalid');
-    $(this).parent().find('.show-invalid').remove();
+// $(document).on('change', '#modal-form input, #modal-form select, #modal-form textarea', function(e) {
+//     e.preventDefault();
+//     $(this).removeClass('invalid');
+//     $(this).parent().find('.show-invalid').remove();
 
-});
+// });
 
 // removeValid();
 // function removeValid() {

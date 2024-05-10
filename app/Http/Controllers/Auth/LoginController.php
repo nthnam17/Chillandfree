@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\RegisterRequest;
 use App\Providers\RouteServiceProvider;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Lang;
 
 //use Auth;
 
@@ -72,7 +76,9 @@ class LoginController extends Controller
     }
 
     public function logout(){
+        Log::info('User '.Auth::user()->email.' has logged out');
         Auth::guard('web')->logout();
+        Artisan::call('cache:clear');
         return redirect('login');
     }
 }

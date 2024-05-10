@@ -1,0 +1,17 @@
+.about-comp {
+    background: #F4F6FB;
+    padding-bottom: 50px;
+    margin-top: 80px;
+}
+.infor-title {
+    padding-top: 50px;
+    padding-bottom: 30px;
+}
+.infor-image img {
+    object-fit: cover;
+    width: 100%;
+}
+
+.container-default {
+    max-width: 1140px !important;
+}

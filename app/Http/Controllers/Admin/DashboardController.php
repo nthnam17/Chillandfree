@@ -24,18 +24,7 @@ class DashboardController extends Controller
 
     public function index() {
 
-        return view('admin.layouts.index');
+        return view('admin.dashboard.index');
     }
 
-    public function deadline(){
-        return view('admin.Deadline.index');
-    }
-
-    public function phase(){
-        return view('admin.phase.index');
-    }
-
-    public function birthday(){
-        return view('admin.birthday.index');
-    }
 }

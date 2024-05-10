@@ -1,0 +1,19 @@
+.select-custom-css button{
+    color: black !important;
+    padding: 0.875rem 1.375rem;
+    background: #fff;
+    border-radius: 5px !important;
+}
+.select-custom-css .dropdown-toggle{
+    background-color: #fff !important;
+    border-color: #CED4DA !important;
+}
+
+
+
+ /* css customer validate upadte */
+ .err-input{
+    color: #FF4747;
+    margin-top: 0.5rem;
+    font-size: 13px;
+}

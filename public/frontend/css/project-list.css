@@ -1,0 +1,12 @@
+.products-wrapper {
+    margin-top: 100px;
+}
+.title-section {
+    border-bottom: 1px solid #ececec;
+    margin-bottom: 40px;
+    align-items: center;
+    display: flex;
+}
+.section-title-main {
+    margin-bottom: -2px;
+}

@@ -1,55 +1,76 @@
-{{-- @inject('setting', 'App\CustomClasses\Setting') --}}
+@inject('setting', 'App\CustomClasses\Setting')
 @extends('admin.layouts.auth')
 @section('content')
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card-group">
-                <div class="card p-4">
-                    <div class="card-body">
-                        <h1>CMS VICOPRO</h1>
-                        <form action="" method="post">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="cil-user"></i>
-                                    </span>
-                                </div>
-                                <input class="form-control" type="text" placeholder="Tài khoản" name="username">
+
+    <link rel="stylesheet" type="text/css" href="frontend/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="admin/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="admin/login/fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="/admin/css/simple-notify.min.css">
+{{--    <link rel="stylesheet" type="text/css" href="admin/css/ipad-landscape.css">--}}
+    <link rel="stylesheet" type="text/css" href="admin/login/css/main.css">
+    <link rel="stylesheet" type="text/css" href="frontend/css/all.min.css">
+
+
+    <div class="container">
+        <section id="formHolder">
+
+            <div class="row">
+
+                <!-- Brand Box -->
+                <div class="col-sm-6 brand">
+                    <div class="heading">
+                        <h2>CMS</h2>
+                        <p>CAF</p>
+                    </div>
+                </div>
+                <!-- Form Box -->
+                <div class="col-sm-6 form">
+                    <!-- Login Form -->
+                    <div class="login form-peice ">
+                        <form class="login-form" action="#" method="post" autocomplete="new-password">
+                            <div class="form-group">
+                                <label for="loginemail">Tài khoản</label>
+                                <input type="email" name="username" id="loginemail" autocomplete="off" required>
                             </div>
-                            <div class="input-group mb-4">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="cil-lock-locked"></i>
+
+                            <div class="form-group" style="position: relative">
+                                 <span class="btn-show-pass">
+                                        <i class="zmdi zmdi-eye"></i>
                                     </span>
-                                </div>
-                                <input class="form-control" type="password" placeholder="Mật khẩu" name="password">
+                                <label for="loginPassword">Mật khẩu</label>
+                                <input type="password" name="password"  id="loginPassword" autocomplete="new-password" required>
                             </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <button class="btn btn-primary px-4 submit-btn" type="button">Đăng nhập</button>
-                                </div>
-                                <div class="col-6 text-right">
-                                </div>
+
+                            <div class="CTA">
+                                <input type="submit" class="submit-btn" style="cursor: pointer" value="Đăng nhập">
                             </div>
                         </form>
-                    </div>
-                </div>
-                <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
-                    <div class="card-body text-center">
-                        <div>
-                            {{-- <img src="{{ \App\Helpers\Thumbnail::thumbnailImg($setting->get('logo_login'), 300, 80) }}"/> --}}
-
-                        </div>
-                    </div>
+                    </div><!-- End Login Form -->
                 </div>
             </div>
-        </div>
+        </section>
     </div>
+
 @endsection
 
 @push('custom-scripts')
+    <script src="admin/login/js/main.js"></script>
     <script>
-        console.log('login');
+        var showPass = 0;
+        $('.btn-show-pass').on('click', function () {
+            if (showPass == 0) {
+                $(this).parent().find('input').attr('type', 'text');
+                $(this).find('i').removeClass('zmdi-eye');
+                $(this).find('i').addClass('zmdi-eye-off');
+                showPass = 1;
+            } else {
+                $(this).parent().find('input').attr('type', 'password');
+                $(this).find('i').addClass('zmdi-eye');
+                $(this).find('i').removeClass('zmdi-eye-off');
+                showPass = 0;
+            }
+
+        });
         var urlLogin = '/login';
 
         $(".submit-btn").click(function (e) {
@@ -57,8 +78,9 @@
             login();
         });
 
-        $(document).on('keypress',function(e) {
-            if(e.which == 13) {
+        $(".submit-btn").on('keypress', function (e) {
+            if (e.key === "Enter" || e.keyCode === " ") {
+                e.preventDefault();
                 login();
             }
         });
@@ -68,9 +90,10 @@
             var username = $("input[name='username']").val();
             var password = $("input[name='password']").val();
             let remember = $("input[name='remmember']").is(':checked') ? '1' : '0';
-
+            console.log('234234234')
             if (!username || !password) {
-                showAlert('Chưa nhập username hoặc password', "danger", 5000);
+                // showAlert('Chưa nhập tên đăng nhập hoặc mật khẩu', "danger", 5000);
+                notifyError('Chưa nhập tên đăng nhập hoặc mật khẩu');
                 return;
             }
 
@@ -84,13 +107,107 @@
             let result = ajaxQuery(urlLogin, data, 'POST');
             if (!result) {
                 //noti
-                showAlert("Có lỗi vui lòng thử lại", "danger", 5000);
+                notifyError("Có lỗi vui lòng thử lại");
             } else {
                 //noti
-                showAlert(result.message, result.notify, 5000);
+                // showAlert(result.message, result.notify, 5000);
 
                 if (result.code == 200) window.location.href = "/admin/dashboard";
+                if (result.code == 0) notifyError(result.message);
             }
         }
     </script>
+
+    <script>
+        var urlRegister = '/register';
+
+        $(".btn_register").click(function (e) {
+            e.preventDefault();
+            register();
+        });
+
+        $(".btn_register").on('keypress', function (e) {
+            if (e.key === "Enter" || e.keyCode === " ") {
+                e.preventDefault();
+                register();
+            }
+        });
+
+        function register() {
+            var _token = $('meta[name="csrf-token"]').attr('content');
+            var username = $("input[name='username1']").val();
+            var name = $("input[name='name1']").val();
+            var email = $("input[name='email1']").val();
+            var phone = $("input[name='phone1']").val();
+            var password = $("input[name='password1']").val();
+            var password_confirm = $("input[name='password_confirm']").val();
+            var data = {
+                "_token": _token,
+                "username": username,
+                "name": name,
+                "email": email,
+                "phone": phone,
+                "password": password,
+                "password_confirm": password_confirm,
+                "status": 1,
+                "created_by": "",
+                "updated_by": "",
+            };
+            console.log(data,'data');
+            //query
+            let result = ajaxQuery(urlRegister, data, 'POST');
+            if(result == undefined || result.length==0) {
+                //noti
+                showAlert("@Lang('global.msg_error')", "danger", 5000);
+            }
+            else if(result.code == 200) {
+                //noti
+                showAlert(result.message, result.notify, 5000);
+
+                if(result.code==200) window.location.href = "/login";
+
+            } else if(result.code == 401) {
+                //noti
+                showAlert(result.message, result.notify, 5000);
+            } else {
+                Object.keys(result.errors).forEach(function(key) {
+                    //noti
+                    showAlert(result.errors[key], result.notify, 5000);
+                });
+            }
+        };
+    </script>
+
+    <script>
+        /*global $, document, window, setTimeout, navigator, console, location*/
+        $(document).ready(function () {
+
+            // Detect browser for css purpose
+            if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+                $('.form form label').addClass('fontSwitch');
+            }
+
+            // Label effect
+            $('input').focus(function () {
+
+                $(this).siblings('label').addClass('active');
+            });
+
+
+
+            // form switch
+            $('a.switch').click(function (e) {
+                $(this).toggleClass('active');
+                e.preventDefault();
+
+                if ($('a.switch').hasClass('active')) {
+                    $(this).parents('.form-peice').addClass('switched').siblings('.form-peice').removeClass('switched');
+                } else {
+                    $(this).parents('.form-peice').removeClass('switched').siblings('.form-peice').addClass('switched');
+                }
+            });
+        });
+
+    </script>
+    <script src="frontend/js/all.min.js"></script>
 @endpush
