@@ -28,18 +28,18 @@ class Permission extends Model {
     public static function DataPermission($request) {
         $page_size = $request->page_size ?? self::$PAGE_SIZE;
 
-        $data = Permission::whereLike(['name'], $request->anyField)
+        $data = Permission::whereLike(['name'], $request->name)
                             ->orderBy('parent_id')->orderBy('order')->paginate($page_size);
         foreach ($data as $item) {
             $parent = $item->parent;
             $item->parent_name = is_null($parent) ? 'root' : $parent->name;
         }
 
-        $response = array(
+        $respon = array(
             'data'=> $data,
             'pagination'=> $data->links()->render()
         );
-        return $response;
+        return $respon;
     }
 
     public static function updatePermission($request) {
@@ -64,6 +64,7 @@ class Permission extends Model {
                 'status' => $request->status,
             ];
             Permission::create($data);
+//            Permission::create($request->all());
         } catch (Exception $ex) {
             throw $ex;
         }

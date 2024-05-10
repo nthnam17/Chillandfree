@@ -27,10 +27,15 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
 
     // system roles
     Route::group(['prefix' => 'system/role'], function () {
-            Route::get('/', [App\Http\Controllers\Admin\DashboardController::class, 'index']);
+            Route::get('list', [App\Http\Controllers\Admin\RolesControler::class, 'getList']);
     });
+
+     // system Permissions
+     Route::group(['prefix' => 'system/permission'], function () {
+        Route::get('list', [App\Http\Controllers\Admin\PermissionController::class, 'getList']);
+});
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });

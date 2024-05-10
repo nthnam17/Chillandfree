@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
+use App\Http\Requests\Admin\RolesRequest;
+use Illuminate\Support\Facades\Lang;
 
 class RolesControler extends Controller    
 {

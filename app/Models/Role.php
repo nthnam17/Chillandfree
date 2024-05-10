@@ -8,56 +8,65 @@ class Role extends Model {
     static $PAGE_SIZE = 10;
 
     protected $table = 'roles';
+    protected $fillable = [
+        'name','status','created_at','updated_at'
+    ];
 
     public static function DataRoles($request) {
         $page_size = $request->page_size ?? self::$PAGE_SIZE;
 
-        $query = \Spatie\Permission\Models\Role::whereLike(['name'], $request->anyField)
-            ->orderBy('id', 'DESC');
+        $data = \Spatie\Permission\Models\Role::whereLike(['name'], $request->name)->orderBy('id', 'DESC')->paginate($page_size);
 
-        if ($request->status != '') {
-            $query->where('roles.status', '=', $request->status);
-        }
-
-        $data = $query->paginate($page_size);
-
-        $response = array(
-            'data' => $data,
-            'pagination' => $data->links()->render()
+        $respon = array(
+            'data'=> $data,
+            'pagination'=> $data->links()->render()
         );
-
-        return $response;
+        return $respon;
     }
-
 
     public static function getRoleById($id) {
         return  \Spatie\Permission\Models\Role::find($id);
     }
 
-
-    public static function updateRoles($RoleCurrent) {
-        try {
-            $role = \Spatie\Permission\Models\Role::findOrFail($RoleCurrent->id);
-            $role->update($RoleCurrent->except('permission'));
-            $permissions = $RoleCurrent->input('permission') ? $RoleCurrent->input('permission') : [];
-            $role->syncPermissions($permissions);
-            Artisan::call('cache:clear');
-            Artisan::call('config:cache');
-        } catch (\Exception $ex) {
-            throw $ex;
-        }
+    public static function updateRoles($request) {
+         try {
+             $role = \Spatie\Permission\Models\Role::findOrFail($request->id);
+             $role->update($request->except('permission'));
+             $permissions = $request->input('permission') ? $request->input('permission') : [];
+             $role->syncPermissions($permissions);
+             Artisan::call('cache:clear');
+             Artisan::call('config:cache');
+         } catch (\Exception $ex) {
+             throw $ex;
+         }
+//        try {
+//            $role = Role::find($request->id);
+//            $role->update($request->all());
+//
+//        } catch (Exception $ex) {
+//            throw $ex;
+//        }
     }
 
-    public static function insertRoles($RoleCurrent) {
-        try {
-            $role =  \Spatie\Permission\Models\Role::create($RoleCurrent->except('permission'));
-            $permissions = $RoleCurrent->input('permission') ? $RoleCurrent->input('permission') : [];
-            $role->givePermissionTo($permissions);
-            Artisan::call('cache:clear');
-            Artisan::call('config:cache');
-        } catch (\Exception $ex) {
-            throw $ex;
-        }
+    public static function insertRoles($request) {
+         try {
+             $role =  \Spatie\Permission\Models\Role::create($request->except('permission'));
+             $permissions = $request->input('permission') ? $request->input('permission') : [];
+             $role->givePermissionTo($permissions);
+             Artisan::call('cache:clear');
+             Artisan::call('config:cache');
+         } catch (\Exception $ex) {
+             throw $ex;
+         }
+//        try {
+//            $data = [
+//                'name' => $request->name,
+//                'status' => $request->status,
+//            ];
+//            Role::create($data);
+//        } catch (Exception $ex) {
+//            throw $ex;
+//        }
     }
 
     public static function deleteRoles($id) {
@@ -70,7 +79,8 @@ class Role extends Model {
     }
 
     public static function allRolesActive() {
-        return \Spatie\Permission\Models\Role::where('status', 1)->orderBy('id', 'DESC')->get();
+        $data = \Spatie\Permission\Models\Role::where('status', 1)->orderBy('id', 'DESC')->get();
+        return $data;
     }
 
     public static function RolesActive() {

@@ -1,14 +1,36 @@
 <?php
-use App\Models\Permission;
+use \App\Models\Role_has_permissions;
 ?>
 @extends('admin.layouts.index')
-@section('pageTitle', 'Nhóm quyền')
+@section('pageTitle', 'Quản lý nhóm quyền')
 @section('content')
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
     <style>
-        .btn-search {
-            margin-bottom: 10px;
+        .main-search {
+            border: 1px solid #f5f5f5;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .title-searh-cus-header {
+            padding: 5px ;
+        }
+
+        .title-searh-cus-header p {
+            font-weight: bold;
+            font-size: 16px;
+            color: #5156be;
+            position: relative;
+        }
+        .title-searh-cus-header p::after {
+            content: "";
+            width: 55px;
+            border-bottom: 2px solid #5156be;
+            position: absolute;
+            left: 0;
+            bottom: -3px;
         }
 
         i.fa.fa-times-circle {
@@ -23,108 +45,129 @@ use App\Models\Permission;
             color: #212529;
             background-color: #e6e7e9;
         }
+
+        .btn-sm {
+            padding: 0;
+        }
+
+        .table th, .table td {
+            vertical-align: middle !important;
+        }
+
+        .scroll-table {
+            max-height: calc(100vh - 300px);
+        }
+
+        .card-header {
+            padding: 0.5rem 1rem !important;
+        }
+        .btn-custom {
+            margin-top: 5px;
+        }
+        .btn-custom i {
+            font-size: 13px;
+        }
+
+
     </style>
-    <link rel="stylesheet" type="text/css" href="/admin/css/jquery-ui.css"/>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">Home</li>
-        <li class="breadcrumb-item">Hệ thống</li>
-        <li class="breadcrumb-item active">Danh sách nhóm quyền</li>
-    </ol>
+    <link rel="stylesheet" type="text/css" href="/admin/css/jquery-ui.css">
     <div class="container-fluid">
         <div class="animated fadeIn">
-            <div class="card">
+            <div class="card mb-0">
                 <div class="card-header">
-                    <i class="fa fa-align-justify"></i>
-                    Danh sách nhóm quyền
+                    <h4 class="card-title">Quản lý nhóm quyền</h4>
                 </div>
-                <div class="card-body">
-                    <div class="row align-items-center" id="searchForm">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <div class="clearable-input w-100">
-                                    <label for="status" class="control-label" aria-required="true">Từ khóa</label>
-                                    <input type="text" group="data" name="anyField" class="form-control"
-                                           placeholder="Từ khóa" aria-controls="table"/>
-                                    <span data-clear-input>&times;</span>
-                                </div>
-                            </div>
+                <div class="card-body main-content-group">
+                    <div class="main-search ">
+                        <div class="title-searh-cus-header">
+                            <p>BỘ LỌC</p>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label class="control-label">Trạng thái</label>
+                        <div class="row" id="searchForm">
+                            <div class="col-xs-2 col-md-4">
+                                <input class="form-control" group="data" name="name" type="text" autocomplete="off" spellcheck="false" placeholder="Tên nhóm quyền">
+                            </div>
+                            <div class="col-xs-2 col-md-4">
                                 <select class="form-control select-status" group="data" name="status">
-                                    <option value="">Chọn trạng thái</option>
+                                    <option value="">Tất cả</option>
                                     <option value="1">Hoạt động</option>
-                                    <option value="2">Khóa</option>
+                                    <option value="2">Ngừng hoạt động</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <div class="d-flex justify-content-end mt-3">
+                            <div class="col-xs-2 col-md-4">
                                 <button class="btn btn-outline-primary btn-custom" id="btnSearch">
                                     <i class="fa fa-search" aria-hidden="true"></i> Tìm kiếm
                                 </button>
-                                <button class="btn btn-outline-success btn-custom ml-2" id="btn-reset">
+                                <button class="btn btn-outline-success btn-custom" id="btn-reset">
                                     <i class="fa fa-refresh" aria-hidden="true"></i> Reset
                                 </button>
-                                {{-- @if(Auth::user()->hasPermissionTo(Config::get('constants.ADD_ROLE'))) --}}
-                                    <button class="btn btn-outline-primary btn-custom add-modal ml-2"
-                                            data-toggle="modal"
-                                            data-target="#modal-form">
-                                        <i class="fa fa-plus" aria-hidden="true"></i> Thêm mới
-                                    </button>
-                                {{-- @endif --}}
                             </div>
                         </div>
                     </div>
-                    <div id="idTable" class="mt-3">
-                        <table class="table table-striped border table-hover datatable dataTable no-footer" role="grid"
-                               aria-describedby="table-users_info">
-                            <thead>
-                            <tr role="row">
-                                <th title="STT" class="text-left column-key-username sorting_desc" style="width: 50px;">
-                                    STT
-                                </th>
-                                <th title="Tên nhóm quyền" class="text-left column-key-email sorting"
-                                    style="width: 150px;">Tên nhóm quyền
-                                </th>
-                                <th title="Trạng thái" class="column-key-created_at sorting" style="width: 100px;">Trạng
-                                    thái
-                                </th>
-                                <th title="Thời gian tạo" class="column-key-status sorting" style="width: 100px;">Thời
-                                    gian tạo
-                                </th>
-                                <th title="Thời gian sửa" class="column-key-status sorting" style="width: 100px;">Thời
-                                    gian sửa
-                                </th>
-                                <th title="Thao tác" class="sorting_disabled" style="width: 100px;">Thao tác</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr role="row" class="align-middle odd" id="templateRow" style="display: none">
-                                <td name="stt"></td>
-                                <td group="data" name="name"></td>
-                                <td><span group="data autoConvertData" name="status"></span></td>
-                                <td group="data autoConvertTime" name="created_at"></td>
-                                <td group="data autoConvertTime" name="updated_at"></td>
-                                <td>
-                                    {{-- @if(Auth::user()->hasPermissionTo(Config::get('constants.EDIT_ROLE'))) --}}
-                                        <a class="btn btn-sm active update-modal" href="" name="id"
-                                           group="data"
-                                           convertToAttr="data-id" data-toggle="modal" data-target="#modal-form"><i
-                                                class="fa-solid fa-pencil" style="color: #4B49AC"></i></a>
-                                    {{-- @endif --}}
-                                    {{-- @if(Auth::user()->hasPermissionTo(Config::get('constants.DELETE_ROLE'))) --}}
-                                        <a href="#" name="id" group="data" convertToAttr="data-id" data-toggle="modal"
-                                           title="Xóa"
-                                           data-target="#popup-delete"
-                                           class="btn btn-sm active deleteDialog"><i class="fa-solid fa-trash-can"
-                                                                                     style="color: red"></i></a>
-                                    {{-- @endif --}}
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                    <div class="d-flex justify-content-end mb-3">
+                        <div class="card-header-actions">
+                            {{-- @if(Role_has_permissions::hasPermissionByName('Thêm nhóm quyền')) --}}
+                            <button class="btn btn-outline-primary btn-custom add-modal" data-toggle="modal" data-target="#modal-form">
+                                <i class="fa fa-plus" aria-hidden="true"></i> Thêm mới
+                            </button>
+                            {{-- @endif --}}
+                        </div>
+                    </div>
+                    <div id="idTable">
+                        <div class="scroll-table" id="scroll-table-css">
+                            <table class="table table-striped border table-hover datatable dataTable no-footer"
+                                   role="grid"
+                                   aria-describedby="table-users_info">
+                                <thead>
+                                <tr role="row" class="header-tableData">
+                                    <th title="STT" class=" column-key-username sorting_desc" style="width: 50px;">
+                                        STT
+                                    </th>
+                                    <th title="Tên" class=" column-key-email " style="width: 150px;">Tên
+                                    </th>
+                                    <th title="Trạng thái" class="column-key-created_at " style="width: 100px;">
+                                        Trạng
+                                        thái
+                                    </th>
+                                    <th title="Thời gian tạo" class="column-key-status " style="width: 100px;">
+                                        Thời gian
+                                        tạo
+                                    </th>
+                                    <th title="Thời gian sửa" class="column-key-status " style="width: 100px;">
+                                        Thời gian
+                                        sửa
+                                    </th>
+                                    <th title="Thao tác" class="column-key-status " style="width: 100px;">Thao
+                                        tác
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr role="row" class="align-middle odd" id="templateRow" style="display: none">
+                                    <td class="text-center" name="stt"></td>
+                                    <td group="data" name="name"></td>
+                                    <td class="text-left"><span group="data autoConvertData" name="status"></span>
+                                    </td>
+                                    <td class="text-left" group="data autoConvertTime" name="created_at"></td>
+                                    <td class="text-left" group="data autoConvertTime" name="updated_at"></td>
+                                    <td class="text-left">
+                                        {{-- @if(Role_has_permissions::hasPermissionByName('Cập nhật nhóm quyền')) --}}
+                                        <a title="Chỉnh sửa" class="btn btn-sm  active update-modal-role" href=""
+                                           name="id" style="color: #39b2d5"
+                                           group="data" convertToAttr="data-id" data-toggle="modal"
+                                           data-target="#modal-form"><i class="mdi mdi-pencil"></i></a>
+                                        {{-- @endif --}}
+                                        {{-- @if(Role_has_permissions::hasPermissionByName('Xóa nhóm quyền')) --}}
+                                        <a title="Xóa" class="btn btn-sm active deleteDialog" href=""
+                                           name="id" style="color: #f5302e"
+                                           group="data" convertToAttr="data-id" data-toggle="modal"
+                                           data-target="#popup-delete"><i class="mdi mdi-delete"></i></a>
+                                        {{-- @endif --}}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
                         <div class="datatables__info_wrap">
                             <div class="dataTables_info pull-left" id="table-users_info">
                                 <span class="dt-length-records"></span>
@@ -138,17 +181,19 @@ use App\Models\Permission;
         </div>
     </div>
 
+
+
     @include('admin.global.popupDelete')
 
     <!-- Modal User -->
     <div id="modal-form" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="min-width: 500px; ">
             <!-- Modal content-->
-            <div class="modal-content">
+            <div class="modal-content" >
                 <div class="modal-header bg-modal my-modal">
                     <h4 class="modal-title">
                         <i class="til_img"></i>
-                        <strong>Thêm nhóm quyền</strong>
+                        <strong>Thêm mới nhóm quyền</strong>
                     </h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
@@ -156,15 +201,14 @@ use App\Models\Permission;
                     <form class="form-body">
                         <input group="data" type="hidden" name="id">
                         <div class="form-group">
-                            <label for="first_name" class="control-label required">Tên nhóm quyền </label>
-                            <input group="data" class="form-control" name="name" type="text" spellcheck="false">
+                            <label class="control-label required">Tên nhóm quyền <span>*</span></label>
+                            <input class="form-control" group="data" name="name" type="text" autocomplete="off" spellcheck="false" placeholder="Tên đầy đủ">
                         </div>
                         <div class="form-group">
                             <label class="control-label">Trạng thái</label>
-                            <select group="data" class="form-control select-status" id="status_role" group="data"
-                                    name="status">
+                            <select class="form-control select-status" group="data" name="status">
                                 <option value="1">Hoạt động</option>
-                                <option value="2">Khóa</option>
+                                <option value="2">Ngừng hoạt động</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -175,8 +219,8 @@ use App\Models\Permission;
                                     <label for="expandCollapseAllTree" class="label label-default allTree">Chọn tất
                                         cả</label>
                                     <ul>
-                                        {{-- <?php $data_per = Permission::findParentId(0);?> --}}
-                                        {{-- @foreach($data_per as $item)
+                                        <?php $data_per = \App\Models\Permission::findParentId(0);?>
+                                        @foreach($data_per as $item)
                                             <li class="collapsed" id="node0">
                                                 <input type="checkbox" class="parent" name="checkbox-per"
                                                        value="{{ $item->id }}">
@@ -194,7 +238,7 @@ use App\Models\Permission;
                                                     @endforeach
                                                 </ul>
                                             </li>
-                                        @endforeach --}}
+                                        @endforeach
                                     </ul>
                                 </li>
                             </ul>
@@ -213,6 +257,8 @@ use App\Models\Permission;
             </div>
         </div>
     </div>
+    <!-- End Modal User -->
+
     <style>
         .select2-selection__choice {
             color: #28a745 !important;
@@ -254,8 +300,11 @@ use App\Models\Permission;
             overflow-y: scroll;
         }
     </style>
+
     <script src="/admin/js/jquery-ui.min.js"></script>
     <script src="/admin/js/jquery.tree.min.js"></script>
+
+
     <script>
         $(document).ready(function () {
             // Model: User
@@ -265,24 +314,25 @@ use App\Models\Permission;
                 urlAddModelToDb: "/admin/system/role/add",
                 urlUpdateModelToDb: "/admin/system/role/edit",
                 urlDeleteModelToDb: "/admin/system/role/delete",
-                titleModalAdd: "Thêm mới",
-                titleModalEdit: "Cập nhật",
+                titleModalAdd: "Thêm mới nhóm quyền",
+                titleModalEdit: "Cập nhật nhóm quyền",
 
                 autoConvertData: [
                     {
                         name: "status",
                         convert: [
                             "1->Hoạt động->label badge badge-success sucsess-status",
-                            "2->Ngừng hoạt động->label badge active btn-danger error-status"
+                            "2->Ngừng hoạt động->label badge badge-warning"
                         ]
-
-                    }
-
+                    },
                 ],
                 idTableElement: "#idTable"
 
             };
             setupCRUD(config);
+
+            $(".select2").select2({ tags: true });
+            $('#modal-form .select2').val(null).trigger('change');
 
             $('#auto-checkboxes').tree({});
 
@@ -294,7 +344,7 @@ use App\Models\Permission;
             });
 
             //### event show role ###
-            $(config.idTableElement + ' tbody').on('click', '.update-modal', function () {
+            $(config.idTableElement + ' tbody').on('click', '.update-modal-role', function () {
                 setUpModal(config.titleModalEdit);
                 $("#btnAddCustom").contents().last()[0].textContent = config.titleModalEdit;
                 $('input[name="checkbox-per"]').each(function (i, obj) {
@@ -304,16 +354,13 @@ use App\Models\Permission;
                 let data = {
                     "id": $(this).data("id")
                 };
-                let result = ajaxQuery(config.urlGetModelFromDb, data, 'POST');
+                let result = ajaxQuery(config.urlGetModelFromDb, data, 'GET');
                 if (result.code == 200) {
                     updateDataView("#modal-form", result.data);
+                    $('#modal-form .select2').val(result.data.field_id);
 
                     $('input[name="checkbox-per"]').each(function (i, obj) {
-                        // if (result.data.permissions.indexOf(parseInt(this.value)) != -1) {
-                        //     $(this).prop('checked', true);
-                        //     //let test = $(this).parent().parent().parent();
-                        //     //test.find('input.parent').prop('checked', true);
-                        // }
+                        console.log('234234234234');
                         result.data.permissions.forEach(function (item) {
                             if (item == obj.value) $(obj).prop('checked', true);
                         });
@@ -321,7 +368,7 @@ use App\Models\Permission;
 
                 } else if (result.code == 401) {
                     //notify error
-                    showAlert(result.message, result.notify, 5000);
+                    showNotiError(result.message)
                 }
             });
 
@@ -333,16 +380,16 @@ use App\Models\Permission;
                     lstPer.push(this.value);
                 });
                 let data = {
-                    id: $("input[name='id']").val(),
-                    name: $("input[name='name']").val(),
-                    status: $("#status_role").val(),
+                    id: $("#modal-form input[name='id']").val(),
+                    name: $(" #modal-form input[name='name']").val(),
+                    status: $("#modal-form .select-status").val(),
                     permission: lstPer,
+                    field_id: $('#modal-form .select2').val()
                 };
                 let result = ajaxQuery(data.id == '' || data.id == undefined ? config.urlAddModelToDb : config.urlUpdateModelToDb, data, 'POST');
                 if (result.code == 200) {
                     //notify success
-                    showAlert(result.message, result.notify, 5000);
-
+                    swalSuccess(result.message);
                     loadDataTable();
 
                     //close modal
@@ -353,10 +400,12 @@ use App\Models\Permission;
 
                 } else if (result.code == 401) {
                     //notify error
-                    showAlert(result.message, result.notify, 5000);
+                    // showAlert(result.message, result.notify, 5000);
+                    showNotiError(result.message)
                 } else {
                     if (result.errors == null) {
-                        showAlert(result.message, result.notify, 5000);
+                        // showAlert(result.message, result.notify, 5000);
+                        showNotiError(result.message)
                     } else {
                         Object.keys(result.errors).forEach(function (key) {
                             let locationAddValidate = $("input[name='" + key + "']").parent();
@@ -382,8 +431,8 @@ use App\Models\Permission;
 
                 if (!flag) $('#expandCollapseAllTree').prop('checked', false);
             });
-        });
 
+        });
     </script>
 @endsection
 

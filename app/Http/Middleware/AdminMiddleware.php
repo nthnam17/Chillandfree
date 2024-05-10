@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Role_has_permissions;
 use App\Models\User;
 use Closure;
 use Spatie\Permission\Models\Permission;
@@ -18,22 +19,28 @@ class AdminMiddleware
      * @return mixed
      */
     public function handle($request, Closure $next) {
-       
         $url = '/' . Request::path();
         $permission = Permission::where('slug', $url)->first();
-
-        if (!$permission || !Auth::user()->hasPermissionTo($permission->name)) {
-
+        if(!$permission) {
             if($request->ajax()) {
-                
                 return response_json(401, "Không có quyền!", "danger");
             }else {
-                // abort(401);
-                return redirect('/');
+                abort(401);
             }
-        } else {
-            return $next($request);
         }
+
+        $hasPermission = Role_has_permissions::hasPermissionByRole($permission->id);
+
+         if (!$permission || !$hasPermission) {
+
+             if($request->ajax()) {
+                 return response_json(401, "Không có quyền!", "danger");
+             }else {
+                 abort(401);
+             }
+         } else {
+             return $next($request);
+         }
 
 
         return $next($request);
