@@ -3,7 +3,8 @@
 use App\CustomClasses\ColectionPaginate;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use mysql_xdevapi\Exception;
+// use mysql_xdevapi\Exception;
+use Exception;
 
 class Permission extends Model {
 
@@ -28,7 +29,7 @@ class Permission extends Model {
     public static function DataPermission($request) {
         $page_size = $request->page_size ?? self::$PAGE_SIZE;
 
-        $data = Permission::whereLike(['name'], $request->name)
+        $data = Permission::where('name','LIKE' ,'%'. $request->name .'%')
                             ->orderBy('parent_id')->orderBy('order')->paginate($page_size);
         foreach ($data as $item) {
             $parent = $item->parent;

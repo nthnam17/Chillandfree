@@ -33,7 +33,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
      // system Permissions
      Route::group(['prefix' => 'system/permission'], function () {
         Route::get('list', [App\Http\Controllers\Admin\PermissionController::class, 'getList']);
-});
+        Route::post('add', [App\Http\Controllers\Admin\PermissionController::class, 'addPermission']);
+    });
 });
 
 // Route::get('/', function () {

@@ -18,7 +18,8 @@
                 <span class="menu-title pl-3">Trang chủ</span>
             </a>
         </li>
-        <li class="nav-item">
+        
+        {{-- <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-topic" aria-expanded="false" aria-controls="ui-topic">
                 <i class="fa fa-book" aria-hidden="true"></i>
                 <span class="menu-title pl-3">Quản lý chủ đề</span>
@@ -33,8 +34,8 @@
 
                 </ul>
             </div>
-        </li>
-        <li class="nav-item">
+        </li> --}}
+        {{-- <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-lookup" aria-expanded="false" aria-controls="ui-lookup">
                 <i class="fa fa-university" aria-hidden="true"></i>
                 <span class="menu-title pl-3">Quản lý tra cứu</span>
@@ -52,8 +53,8 @@
 
                 </ul>
             </div>
-        </li>
-        <li class="nav-item">
+        </li> --}}
+        {{-- <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-statistical" aria-expanded="false" aria-controls="ui-statistical">
                 <i class="mdi mdi-chart-bar" aria-hidden="true"></i>
                 <span class="menu-title pl-3">Thống kê</span>
@@ -68,12 +69,12 @@
 
                 </ul>
             </div>
-        </li>
+        </li> --}}
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-system" aria-expanded="false" aria-controls="ui-system">
                 <i class="fa fa-cogs" aria-hidden="true"></i>
                 <span class="menu-title pl-3">Cấu hình hệ thống</span>
-                <i class="menu-arrow"></i>
+                {{-- <i class="menu-arrow"></i> --}}
             </a>
             <div class="collapse" id="ui-system">
                 <ul class="nav flex-column sub-menu">

@@ -77,7 +77,7 @@
     >
         <a class="navbar-brand brand-logo mr-5" href="/"
         ><img src="{{ url('/admin/image/logo-mini.svg') }}" class="mr-2" alt="logo"
-            /><b style="font-size: 20px">MUSEUM</b></a>
+            /><b style="font-size: 20px">Chill And Free</b></a>
         <a class="navbar-brand brand-logo-mini" href="/"
         ><img src="{{ url('/admin/image/logo-mini.svg') }}" alt="logo"
             /></a>

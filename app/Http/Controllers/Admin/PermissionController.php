@@ -10,14 +10,15 @@ use Illuminate\Http\Request;
 use App\Models\Permission;
 use App\Http\Requests\Admin\PermissionRequest;
 use Illuminate\Support\Facades\Lang;
-use mysql_xdevapi\Exception;
+// use mysql_xdevapi\Exception;
+use Exception;
 
 
 class PermissionController extends Controller
 
 {
     public function __construct() {
-        $this->middleware(['isAdmin'])->except('getList','getPer', 'parentPer');
+        $this->middleware(['isAdmin'])->except('getList','getPer', 'parentPer','addPermission');
     }
     /**
 
@@ -56,6 +57,7 @@ class PermissionController extends Controller
 
             return response_json(200, Lang::get('global.msg_add_success'), Lang::get('global.notify_success'));
         } catch (Exception $ex) {
+            dd($ex);
             return response_json(0,  Lang::get('global.msg_error'), Lang::get('global.notify_danger'));
         }
 

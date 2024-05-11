@@ -326,9 +326,6 @@ function setupEventShowDialogAddNew() {
 
 function setupEventAddNewOneRowDataToDb() {
     $("#btnAdd").click(function (e) {
-        var best_sale = $('#cb-switch').is(':checked');
-        var data = getDataView('form.form-body');
-            data.best_sale = best_sale == true ? 1 : 0;
         let result = ajaxQuery(data.id=='' || data.id==undefined ? config.urlAddModelToDb : config.urlUpdateModelToDb, data, 'POST');
         if (result.code == 200) {
             //notify success

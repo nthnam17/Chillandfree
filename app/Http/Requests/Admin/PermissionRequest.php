@@ -24,13 +24,9 @@ class PermissionRequest extends FormRequest {
     public function rules()
     {
         $rules = [
-            'name' => ['required','min:3', 'max:100']
-
+            'name' => 'required','min:3', 'max:100',
+            'slug' => 'unique:permissions,slug,'.$this->id,
         ];
-//        if($this->parent_id != 0)
-//        {
-//            $rules['slug'] = 'required|unique:permissions,slug,'.$this->id;
-//        }
 
         return $rules;
 
@@ -39,7 +35,7 @@ class PermissionRequest extends FormRequest {
     public function messages(){
         return [
             'name.required' => 'Chưa nhập tên!',
-            'slug.required' => 'Chưa nhập slug!',
+            // 'slug.required' => 'Chưa nhập slug!',
             'slug.unique' => 'Slug đã tồn tại',
             'name.min'             => 'Tên phải có độ dài ít nhất 3 ký tự!',
             'name.max'             => 'Tên phải có độ dài không vượt quá 50 ký tự!',

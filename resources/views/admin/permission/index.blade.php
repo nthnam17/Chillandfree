@@ -2,8 +2,8 @@
 use App\Models\Permission;
 use \App\Models\Role_has_permissions;
 
-$url = '/' . Request::path();
-$permission = Permission::where('slug', $url)->first();
+// $url = '/' . Request::path();
+// $permission = Permission::where('slug', $url)->first();
 
 ?>
 @extends('admin.layouts.index')
