@@ -15,7 +15,7 @@ class Role extends Model {
     public static function DataRoles($request) {
         $page_size = $request->page_size ?? self::$PAGE_SIZE;
 
-        $data = \Spatie\Permission\Models\Role::whereLike(['name'], $request->name)->orderBy('id', 'DESC')->paginate($page_size);
+        $data = \Spatie\Permission\Models\Role::where('name','LIKE','%' . $request->name. '%')->orderBy('id', 'DESC')->paginate($page_size);
 
         $respon = array(
             'data'=> $data,

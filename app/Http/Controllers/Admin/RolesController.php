@@ -8,7 +8,7 @@ use App\Models\Role;
 use App\Http\Requests\Admin\RolesRequest;
 use Illuminate\Support\Facades\Lang;
 
-class RolesControler extends Controller    
+class RolesController extends Controller    
 {
     public function __construct()
     {

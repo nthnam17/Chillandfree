@@ -26,14 +26,15 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
 
 
     // system roles
-    Route::group(['prefix' => 'system/role'], function () {
-            Route::get('list', [App\Http\Controllers\Admin\RolesControler::class, 'getList']);
+    Route::group(['prefix' => 'system/roles'], function () {
+            Route::get('list', [App\Http\Controllers\Admin\RolesController::class, 'getList']);
     });
 
      // system Permissions
      Route::group(['prefix' => 'system/permission'], function () {
         Route::get('list', [App\Http\Controllers\Admin\PermissionController::class, 'getList']);
         Route::post('add', [App\Http\Controllers\Admin\PermissionController::class, 'addPermission']);
+        Route::get('getOne', [App\Http\Controllers\Admin\PermissionController::class, 'getOne']);
     });
 });
 

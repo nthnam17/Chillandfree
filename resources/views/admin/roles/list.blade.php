@@ -309,11 +309,11 @@ use \App\Models\Role_has_permissions;
         $(document).ready(function () {
             // Model: User
             const config = {
-                urlList: "/admin/system/role/list",
-                urlGetModelFromDb: "/admin/system/role/getRole",
-                urlAddModelToDb: "/admin/system/role/add",
-                urlUpdateModelToDb: "/admin/system/role/edit",
-                urlDeleteModelToDb: "/admin/system/role/delete",
+                urlList: "/admin/system/roles/list",
+                urlGetModelFromDb: "/admin/system/roles/getOne",
+                urlAddModelToDb: "/admin/system/roles/add",
+                urlUpdateModelToDb: "/admin/system/roles/edit",
+                urlDeleteModelToDb: "/admin/system/roles/delete",
                 titleModalAdd: "Thêm mới nhóm quyền",
                 titleModalEdit: "Cập nhật nhóm quyền",
 

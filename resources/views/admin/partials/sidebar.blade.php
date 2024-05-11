@@ -79,7 +79,7 @@
             <div class="collapse" id="ui-system">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="{{ url('admin/system/users/list') }}">Quản lý người dùng</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/system/role/list') }}">Quản lý nhóm quyền</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/system/roles/list') }}">Quản lý nhóm quyền</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ url('admin/system/permission/list') }}">Quản lý quyền</a></li>
                     <li class="nav-item items-small-menu">
                         <a class="nav-link nav-item-drop" href="{{ url('admin/settings/general') }}">Cài đặt chung</a>

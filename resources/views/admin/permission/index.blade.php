@@ -254,7 +254,7 @@ use \App\Models\Role_has_permissions;
             // Model: Permission
             const config = {
                 urlList: "/admin/system/permission/list",
-                urlGetModelFromDb: "/admin/system/permission/getPer",
+                urlGetModelFromDb: "/admin/system/permission/getOne",
                 urlAddModelToDb: "/admin/system/permission/add",
                 urlUpdateModelToDb: "/admin/system/permission/edit",
                 urlDeleteModelToDb: "/admin/system/permission/delete",

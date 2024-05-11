@@ -18,7 +18,7 @@ class PermissionController extends Controller
 
 {
     public function __construct() {
-        $this->middleware(['isAdmin'])->except('getList','getPer', 'parentPer','addPermission');
+        $this->middleware(['isAdmin'])->except('getList','getOne', 'parentPer','addPermission');
     }
     /**
 
@@ -90,7 +90,7 @@ class PermissionController extends Controller
 
     }
 
-    public function getPer(Request $request){
+    public function getOne(Request $request){
         try {
             $permission = Permission::findPermission($request->id);
             return response_json(200, "", "", $permission);
