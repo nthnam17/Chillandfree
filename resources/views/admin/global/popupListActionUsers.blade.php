@@ -26,7 +26,7 @@ use \App\Models\Role_has_permissions;
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
                              aria-labelledby="nav-home-tab">
                             <div class="d-flex justify-content-end">
-                                @if(Role_has_permissions::hasPermissionByName('Cập nhật người dùng'))
+                                @if(Role_has_permissions::hasPermissionByName('Cập nhập người dùng'))
                                 <a title="Cập nhật thông tin loại kỹ năng" class="btn btn-sm active" href=""
                                    id="eventUpdate"
                                    name="id" style="color: #4B49AC"
@@ -119,7 +119,7 @@ use \App\Models\Role_has_permissions;
 <script>
     $(document).ready(function () {
         const config = {
-            urlGetModelFromDb: "/admin/system/users/getUsers",
+            urlGetModelFromDb: "/admin/system/users/get",
             urlUpdateModelToDb: "/admin/system/users/edit",
             urlDeleteModelToDb: "/admin/system/users/delete",
         }

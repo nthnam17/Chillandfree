@@ -7,12 +7,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Http\Requests\Admin\RolesRequest;
 use Illuminate\Support\Facades\Lang;
+use Exception;
 
 class RolesController extends Controller    
 {
     public function __construct()
     {
-        $this->middleware(['isAdmin'])->except('getRole', 'getList', 'updateRole');
+        $this->middleware(['isAdmin'])->except('getList', 'updateRole','insertOne','getOne');
     }
 
     /**
@@ -32,14 +33,14 @@ class RolesController extends Controller
         }
     }
 
-    public function getRole(Request $request)
+    public function getOne(Request $request)
     {
         $role = Role::getRoleById($request->id);
         $role->permissions = $role->permissions()->pluck('id');
         return response_json(200, "", "", $role);
     }
 
-    public function insertRole(RolesRequest $request)
+    public function insertOne(RolesRequest $request)
     {
         try {
             if (isset($request->validator) && $request->validator->fails()) {

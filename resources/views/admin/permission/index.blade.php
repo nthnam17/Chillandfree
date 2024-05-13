@@ -2,8 +2,8 @@
 use App\Models\Permission;
 use \App\Models\Role_has_permissions;
 
-// $url = '/' . Request::path();
-// $permission = Permission::where('slug', $url)->first();
+$url = '/' . Request::path();
+$permission = Permission::where('slug', $url)->first();
 
 ?>
 @extends('admin.layouts.index')
@@ -104,11 +104,11 @@ use \App\Models\Role_has_permissions;
                     </div>
                     <div class="d-flex justify-content-end mb-3">
                         <div class="card-header-actions">
-                            {{-- @if(Role_has_permissions::hasPermissionByName('Thêm quyền')) --}}
+                            @if(Role_has_permissions::hasPermissionByName('Thêm mới quyền'))
                             <button class="btn btn-outline-primary btn-custom add-modal" data-toggle="modal" data-target="#modal-form">
                                 <i class="fa fa-plus" aria-hidden="true"></i> Thêm mới
                             </button>
-                            {{-- @endif --}}
+                            @endif
                         </div>
                     </div>
                     <div id="idTable">
@@ -142,24 +142,24 @@ use \App\Models\Role_has_permissions;
                                 <tbody>
                                 <tr role="row" class="align-middle odd" id="templateRow" style="display: none">
                                     <td class="text-center" name="stt"></td>
-                                    <td group="data" name="name"></td>
+                                    <td class="text-center" group="data" name="name"></td>
                                     <td class="text-center" group="data" name="parent_name"></td>
                                     {{--                                <td group="data" name="slug"></td>--}}
                                     <td class="text-center"><span group="data autoConvertData" name="status"></span></td>
                                     <td class="text-center" group="data autoConvertTime" name="created_at"></td>
                                     <td class="text-center" group="data autoConvertTime" name="updated_at"></td>
                                     <td class="text-center">
-                                        {{-- @if(Role_has_permissions::hasPermissionByName('Cập nhật quyền')) --}}
+                                        @if(Role_has_permissions::hasPermissionByName('Cập nhập quyền'))
                                             <a style="color: #39b2d5" title="Chỉnh sửa" class="btn btn-sm active update-modal" href=""
                                                name="id"
                                                group="data" convertToAttr="data-id" data-toggle="modal"
                                                data-target="#modal-form"><i class="mdi mdi-pencil"></i></a>
-                                        {{-- @endif --}}
-                                        {{-- @if(Role_has_permissions::hasPermissionByName('Xóa quyền')) --}}
+                                        @endif
+                                        @if(Role_has_permissions::hasPermissionByName('Xóa quyền'))
                                             <a style="color: #f5302e" title="Xóa" class="btn btn-sm active deleteDialog" href="" name="id"
                                                group="data" convertToAttr="data-id" data-toggle="modal"
                                                data-target="#popup-delete"><i class="mdi mdi-delete"></i></a>
-                                        {{-- @endif --}}
+                                        @endif
                                     </td>
                                 </tr>
                                 </tbody>
@@ -205,13 +205,13 @@ use \App\Models\Role_has_permissions;
                         <div class="form-group">
                             <label for="first_name" class="control-label">Nhóm cha</label>
                             <select group="data" class="form-control select-parent_id" name="parent_id">
-                                <option value="0">Chọn nhóm cha</option>
+                                {{-- <option value="0">Chọn nhóm cha</option>
                                 <?php $data_permission = Permission::findParentId(0);?>
                                 @if(isset($data_permission) && count($data_permission)>0)
                                     @foreach($data_permission as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
-                                @endif
+                                @endif --}}
                             </select>
                         </div>
                         <div class="form-group">
@@ -254,7 +254,7 @@ use \App\Models\Role_has_permissions;
             // Model: Permission
             const config = {
                 urlList: "/admin/system/permission/list",
-                urlGetModelFromDb: "/admin/system/permission/getOne",
+                urlGetModelFromDb: "/admin/system/permission/get",
                 urlAddModelToDb: "/admin/system/permission/add",
                 urlUpdateModelToDb: "/admin/system/permission/edit",
                 urlDeleteModelToDb: "/admin/system/permission/delete",
@@ -275,6 +275,7 @@ use \App\Models\Role_has_permissions;
 
             };
             setupCRUD(config);
+            reLoadOption();
 
             // //event onchange parent id
             // $('.select-parent_id').on('change', function () {
@@ -286,26 +287,27 @@ use \App\Models\Role_has_permissions;
             //     setRequiredSlug(null);
             // });
             //
-            // //event hidden model
-            // $('#modal-form').on('hidden.bs.modal', function () {
-            //     console.log('###EVENT RELOAD PARENT_ID###');
-            //     reLoadOption();
-            // });
-            //
-            // function reLoadOption() {
-            //     let arrResult = ajaxQuery(config.urlGetParentPer, null, 'GET');
-            //     if (arrResult.code == 200) {
-            //         $(".select-parent_id").children().remove();
-            //         let html = '';
-            //         html += '<option value="0">Chọn loại cha</option>';
-            //
-            //         for (let item of arrResult.data) {
-            //             html += '<option value="' + item.id + '">' + item.name + '</option>';
-            //         }
-            //         $(".select-parent_id").append(html);
-            //     }
-            // }
-            //
+            //event hidden model
+            $('#modal-form').on('hidden.bs.modal', function () {
+                console.log('###EVENT RELOAD PARENT_ID###');
+                reLoadOption();
+            });
+            
+            function reLoadOption() {
+                let arrResult = ajaxQuery(config.urlGetParentPer, data, 'GET');
+                console.log(arrResult)
+                if (arrResult.code == 200) {
+                    $(".select-parent_id").children().remove();
+                    let html = '';
+                    html += '<option value="0">Chọn loại cha</option>';
+            
+                    for (let item of arrResult.data) {
+                        html += '<option value="' + item.id + '">' + item.name + '</option>';
+                    }
+                    $(".select-parent_id").append(html);
+                }
+            }
+            
             // function setRequiredSlug(val) {
             //     if (val == '' || val == null) {
             //         $('.label-slug').removeClass("required");

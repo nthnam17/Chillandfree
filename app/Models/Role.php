@@ -93,6 +93,4 @@ class Role extends Model {
     }
 
 
-
-
 }

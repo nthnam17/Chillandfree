@@ -212,7 +212,6 @@ function loadDataTable() {
 
 // function setHeightTable() {
 //     console.log('setHeightTable');
-//     //height table
 //     if($('#scroll-table-css').length > 0) {
 //         let height_screen = $(document).height();
 //         let height_title = $('.content .title').length>0 ? $('.content .title')[0].offsetHeight : 0;
@@ -222,7 +221,6 @@ function loadDataTable() {
 //         let searchForm = $('#searchForm').length>0 ? $('#searchForm')[0].offsetHeight : 0;
 //         let clearable_input = $('.clearable-input').length>0 ? $('.clearable-input')[0].offsetHeight+16 : 0;
 //         let card_header = $('.card .card-header').length>0 ? $('.card .card-header')[0].offsetHeight+16 : 0;
-//         //let height_padding = 80;
 //         let height_table = height_screen - height_title - height_topbar - height_padding
 //             - height_pagination - height_search_container - searchForm - clearable_input - card_header - 45;
 //         console.log('height_table: ' + height_table);
@@ -326,6 +324,7 @@ function setupEventShowDialogAddNew() {
 
 function setupEventAddNewOneRowDataToDb() {
     $("#btnAdd").click(function (e) {
+        var data = getDataView('form.form-body');
         let result = ajaxQuery(data.id=='' || data.id==undefined ? config.urlAddModelToDb : config.urlUpdateModelToDb, data, 'POST');
         if (result.code == 200) {
             //notify success

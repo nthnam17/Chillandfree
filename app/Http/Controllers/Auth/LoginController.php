@@ -76,7 +76,7 @@ class LoginController extends Controller
     }
 
     public function logout(){
-        Log::info('User '.Auth::user()->email.' has logged out');
+        // Log::info('User '.Auth::user()->email.' has logged out');
         Auth::guard('web')->logout();
         Artisan::call('cache:clear');
         return redirect('login');

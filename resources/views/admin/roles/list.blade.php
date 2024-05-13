@@ -105,11 +105,11 @@ use \App\Models\Role_has_permissions;
                     </div>
                     <div class="d-flex justify-content-end mb-3">
                         <div class="card-header-actions">
-                            {{-- @if(Role_has_permissions::hasPermissionByName('Thêm nhóm quyền')) --}}
+                            @if(Role_has_permissions::hasPermissionByName('Thêm mới nhóm quyền'))
                             <button class="btn btn-outline-primary btn-custom add-modal" data-toggle="modal" data-target="#modal-form">
                                 <i class="fa fa-plus" aria-hidden="true"></i> Thêm mới
                             </button>
-                            {{-- @endif --}}
+                            @endif
                         </div>
                     </div>
                     <div id="idTable">
@@ -150,18 +150,18 @@ use \App\Models\Role_has_permissions;
                                     <td class="text-left" group="data autoConvertTime" name="created_at"></td>
                                     <td class="text-left" group="data autoConvertTime" name="updated_at"></td>
                                     <td class="text-left">
-                                        {{-- @if(Role_has_permissions::hasPermissionByName('Cập nhật nhóm quyền')) --}}
+                                        @if(Role_has_permissions::hasPermissionByName('Cập nhập nhóm quyền'))
                                         <a title="Chỉnh sửa" class="btn btn-sm  active update-modal-role" href=""
                                            name="id" style="color: #39b2d5"
                                            group="data" convertToAttr="data-id" data-toggle="modal"
                                            data-target="#modal-form"><i class="mdi mdi-pencil"></i></a>
-                                        {{-- @endif --}}
-                                        {{-- @if(Role_has_permissions::hasPermissionByName('Xóa nhóm quyền')) --}}
+                                        @endif
+                                        @if(Role_has_permissions::hasPermissionByName('Xóa nhóm quyền'))
                                         <a title="Xóa" class="btn btn-sm active deleteDialog" href=""
                                            name="id" style="color: #f5302e"
                                            group="data" convertToAttr="data-id" data-toggle="modal"
                                            data-target="#popup-delete"><i class="mdi mdi-delete"></i></a>
-                                        {{-- @endif --}}
+                                        @endif
                                     </td>
                                 </tr>
                                 </tbody>
@@ -310,7 +310,7 @@ use \App\Models\Role_has_permissions;
             // Model: User
             const config = {
                 urlList: "/admin/system/roles/list",
-                urlGetModelFromDb: "/admin/system/roles/getOne",
+                urlGetModelFromDb: "/admin/system/roles/get",
                 urlAddModelToDb: "/admin/system/roles/add",
                 urlUpdateModelToDb: "/admin/system/roles/edit",
                 urlDeleteModelToDb: "/admin/system/roles/delete",

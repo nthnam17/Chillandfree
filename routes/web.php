@@ -27,14 +27,30 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
 
     // system roles
     Route::group(['prefix' => 'system/roles'], function () {
-            Route::get('list', [App\Http\Controllers\Admin\RolesController::class, 'getList']);
+        Route::get('list', [App\Http\Controllers\Admin\RolesController::class, 'getList']);
+        Route::get('get', [App\Http\Controllers\Admin\RolesController::class, 'getOne']);
+        Route::post('add', [App\Http\Controllers\Admin\RolesController::class, 'insertOne']);
+        Route::post('edit', [App\Http\Controllers\Admin\RolesController::class, 'updateRole']);
+        Route::post('delete', [App\Http\Controllers\Admin\RolesController::class, 'delRole']);
     });
 
-     // system Permissions
-     Route::group(['prefix' => 'system/permission'], function () {
+    // system Permissions
+    Route::group(['prefix' => 'system/permission'], function () {
         Route::get('list', [App\Http\Controllers\Admin\PermissionController::class, 'getList']);
+        Route::get('get', [App\Http\Controllers\Admin\PermissionController::class, 'getOne']);
+        Route::get('parentPer', [App\Http\Controllers\Admin\PermissionController::class, 'parentPer']);
         Route::post('add', [App\Http\Controllers\Admin\PermissionController::class, 'addPermission']);
-        Route::get('getOne', [App\Http\Controllers\Admin\PermissionController::class, 'getOne']);
+        Route::post('edit', [App\Http\Controllers\Admin\PermissionController::class, 'editOne']);
+        Route::post('delete', [App\Http\Controllers\Admin\PermissionController::class, 'delPermission']);
+    });
+
+    // system Users
+    Route::group(['prefix' => 'system/users'], function () {
+        Route::get('list', [App\Http\Controllers\Admin\UsersController::class, 'getList']);
+        Route::get('get', [App\Http\Controllers\Admin\UsersController::class, 'getOne']);
+        Route::post('add', [App\Http\Controllers\Admin\UsersController::class, 'addUser']);
+        Route::post('edit', [App\Http\Controllers\Admin\UsersController::class, 'updateUser']);
+        Route::post('delete', [App\Http\Controllers\Admin\UsersController::class, 'delUser']);
     });
 });
 

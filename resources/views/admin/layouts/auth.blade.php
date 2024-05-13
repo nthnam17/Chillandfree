@@ -7,7 +7,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Web MUSEUM</title>
+        <title>Web CMS</title>
         <meta property="og:image" content="{{ url('/admin/image/logo-mini.svg') }}">
         <meta name="description" content="data tektra">
         <meta property="og:description" content="{{ config('app.url') }}">

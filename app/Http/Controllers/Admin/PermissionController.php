@@ -17,8 +17,9 @@ use Exception;
 class PermissionController extends Controller
 
 {
-    public function __construct() {
-        $this->middleware(['isAdmin'])->except('getList','getOne', 'parentPer','addPermission');
+    public function __construct()
+    {
+        $this->middleware(['isAdmin'])->except('getList', 'getOne', 'parentPer', 'addPermission','editOne');
     }
     /**
 
@@ -36,17 +37,19 @@ class PermissionController extends Controller
         return view('admin.permission.index');
     }
 
-    public function getList(Request $request) {
+    public function getList(Request $request)
+    {
 
-        if($request->ajax()){
+        if ($request->ajax()) {
             $data = Permission::DataPermission($request);
             return response_json(200, "", "", $data);
-        }else{
+        } else {
             return view('admin.permission.index');
         }
     }
 
-    public function addPermission(PermissionRequest $request) {
+    public function addPermission(PermissionRequest $request)
+    {
         try {
             //validator
             if (isset($request->validator) && $request->validator->fails()) {
@@ -60,10 +63,11 @@ class PermissionController extends Controller
             dd($ex);
             return response_json(0,  Lang::get('global.msg_error'), Lang::get('global.notify_danger'));
         }
-
     }
 
-    public function updatePermission(PermissionRequest $request) {
+    public function editOne(PermissionRequest $request)
+    {
+
         try {
             //validator
             if (isset($request->validator) && $request->validator->fails()) {
@@ -78,19 +82,19 @@ class PermissionController extends Controller
         }
     }
 
-    public function delPermission(Request $request) {
+    public function delPermission(Request $request)
+    {
         try {
             Permission::deletePermission($request->id);
 
             return response_json(200,  Lang::get('global.msg_delete_success'), Lang::get('global.notify_success'));
-
         } catch (Exception $ex) {
             return response_json(0, Lang::get('global.msg_error'), Lang::get('global.notify_danger'));
         }
-
     }
 
-    public function getOne(Request $request){
+    public function getOne(Request $request)
+    {
         try {
             $permission = Permission::findPermission($request->id);
             return response_json(200, "", "", $permission);
@@ -99,7 +103,8 @@ class PermissionController extends Controller
         }
     }
 
-    public function parentPer() {
+    public function parentPer()
+    {
         try {
             $permission = Permission::findParentId(0);
             return response_json(200, "", "", $permission);
