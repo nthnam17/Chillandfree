@@ -24,6 +24,10 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
         Route::get('/', [App\Http\Controllers\Admin\DashboardController::class, 'index']);
     });
 
+    // settings
+    Route::group(['prefix' => 'settings'], function () {
+        Route::get('/menu', [App\Http\Controllers\Admin\MenusController::class, 'index']);
+    });
 
     // system roles
     Route::group(['prefix' => 'system/roles'], function () {
@@ -51,9 +55,10 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
         Route::post('add', [App\Http\Controllers\Admin\UsersController::class, 'addUser']);
         Route::post('edit', [App\Http\Controllers\Admin\UsersController::class, 'updateUser']);
         Route::post('delete', [App\Http\Controllers\Admin\UsersController::class, 'delUser']);
+        Route::post('reset', [App\Http\Controllers\Admin\UsersController::class, 'delresetPasswordUser']);
     });
 });
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () { 
+    return view('welcome');
+});

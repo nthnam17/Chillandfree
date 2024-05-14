@@ -90,7 +90,7 @@ class UsersController extends Controller
 
     public function resetPassword(Request $request)
     {
-        $password = 11111111;
+        $password = 123456;
         if ($request->all()['id']) {
             try {
                 User::resetPassword($request->all()['id'], $password);

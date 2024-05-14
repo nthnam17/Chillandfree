@@ -102,7 +102,7 @@ class User extends Authenticatable
 //            $user->syncRoles($roles);
 
             if(!is_null($request->password)) {
-                Auth::logoutOtherDevices($user->password);
+                Auth::logoutOtherDevices($request->password);
             }
 
         } catch (\Exception $ex) {

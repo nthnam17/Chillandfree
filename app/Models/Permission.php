@@ -40,6 +40,7 @@ class Permission extends Model {
             'data'=> $data,
             'pagination'=> $data->links()->render()
         );
+        // dd($respon);
         return $respon;
     }
 

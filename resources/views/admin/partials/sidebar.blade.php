@@ -84,6 +84,9 @@
                     <li class="nav-item items-small-menu">
                         <a class="nav-link nav-item-drop" href="{{ url('admin/settings/general') }}">Cài đặt chung</a>
                     </li>
+                    <li class="nav-item items-small-menu">
+                        <a class="nav-link nav-item-drop" href="{{ url('admin/settings/menu') }}">Quản lý menu</a>
+                    </li>
                 </ul>
 
             </div>

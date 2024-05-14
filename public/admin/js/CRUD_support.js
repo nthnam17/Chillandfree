@@ -539,7 +539,7 @@ function generatePagination(data) {
     }
     else {
         let pagination = data.data;
-        if(pagination.last_page <= 5) {
+        if(pagination.last_page < 1) {
             $(config.idTableElement + ' #table_paginate').html(data.pagination);
         } else {
             //btn more left
@@ -598,7 +598,6 @@ function generatePagination(data) {
             }
             $(config.idTableElement + ' #table_paginate').html(htmlPanigation);
         }
-
         $(config.idTableElement + " #table_paginate nav ul li a").removeAttr("href");
     }
 
