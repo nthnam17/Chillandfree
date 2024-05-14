@@ -59,3 +59,28 @@
         });
     });
 </script>
+
+
+<script type="text/javascript">
+    //<![CDATA[
+
+       // This call can be placed at any point after the
+       // <textarea>, or inside a <head><script> in a
+       // window.onload event handler.
+
+       // Replace the <textarea id="editor"> with an CKEditor
+       // instance, using default configurations.
+       CKEDITOR.replace( 'editor1',
+{
+ filebrowserBrowseUrl : '/plugin/ckfinder/ckfinder.html',
+ filebrowserImageBrowseUrl : '/plugin/ckfinder/ckfinder.html?Type=Images',
+ filebrowserFlashBrowseUrl : '/plugin/ckfinder/ckfinder.html?Type=Flash',
+ filebrowserUploadUrl : '/plugin/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
+ filebrowserImageUploadUrl : '/plugin/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
+ filebrowserFlashUploadUrl : '/plugin/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash'
+} 
+);
+
+    //]]>
+    </script>
+

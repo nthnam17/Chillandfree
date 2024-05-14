@@ -91,6 +91,7 @@ class User extends Authenticatable
             $user->role_id = $request->role_id;
             $user->updated_by = auth()->user()->id;
             $user->updated_at = Carbon::now();
+            $user->image = '/admin/image/boy.png';
             if(!is_null($request->password)) {
                 $user->password = bcrypt($request->password);
             }
@@ -116,6 +117,7 @@ class User extends Authenticatable
         try {
             $user = User::create($request->all());
             $user->fill([
+                'image' => '/admin/image/boy.png',
                 'password' => bcrypt($request->password),
                 'created_by' => auth()->user()->id
             ])->save();

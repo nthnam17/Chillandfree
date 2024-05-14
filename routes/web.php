@@ -27,6 +27,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     // settings
     Route::group(['prefix' => 'settings'], function () {
         Route::get('/menu', [App\Http\Controllers\Admin\MenusController::class, 'index']);
+        Route::get('/profile', [App\Http\Controllers\Admin\UsersController::class, 'getProfile']);
     });
 
     // system roles

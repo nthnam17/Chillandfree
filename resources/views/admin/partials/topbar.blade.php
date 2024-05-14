@@ -119,8 +119,9 @@
                 <div
                     class="dropdown-menu dropdown-menu-right navbar-dropdown"
                     aria-labelledby="profileDropdown"
+                 
                 >
-                    <a class="dropdown-item" href="/admin/settings/profile">
+                    <a id="profile" class="dropdown-item" href="/admin/settings/profile">
                         <i class="ti-settings text-primary"></i>
                         Tài khoản
                     </a>

@@ -16,7 +16,7 @@ class UsersController extends Controller
 
 {
     public function __construct() {
-        $this->middleware(['isAdmin'])->except('getOne', 'resetPassword','getList');
+        $this->middleware(['isAdmin'])->except('getOne','getProfile');
     }
 
     /**
@@ -33,7 +33,6 @@ class UsersController extends Controller
     {
         if($request->ajax()){
             $data = User::DataUsers($request);
-
 
             return response_json(200, "", "", $data);
         }else{
@@ -99,5 +98,12 @@ class UsersController extends Controller
                 return response_json(0, Lang::get('global.msg_error'), Lang::get('global.notify_danger'), null, $ex);
             }
         }
+    }
+
+    public function getProfile(Request $request)
+    {
+        $user_id = auth()->user()->id;
+        $data = User::getUserById($user_id);
+        return view('admin.settings.profile',['data' => $data]);
     }
 }
