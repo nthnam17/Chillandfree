@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 //use Spatie\Permission\Traits\HasRoles;
 use Cache;
 use Spatie\Permission\Traits\HasRoles;
+use Exception;
 
 class User extends Authenticatable
 {
@@ -174,6 +175,54 @@ class User extends Authenticatable
 
     //     return $data;
     // }
+
+    public static function editProfile($request) {
+        try {
+            $user = User::find($request->id);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->updated_by = auth()->user()->id;
+            $user->updated_at = Carbon::now();
+            if(is_null($request->image)) {
+                $user->image = '/admin/image/boy.png';
+            }else {
+                $user->image = $request->image;
+            }
+            $user->save();
+
+        } catch (\Exception $ex) {
+            dd($ex);
+            throw $ex;
+        }
+    }
+
+    public static function editPassword($profile)
+    {
+        try {
+            $user = User::find($profile->id);
+
+            if (!empty($profile->current_password)) {
+                if (!password_verify($profile->current_password, $user->password)) {
+                    throw new Exception('Mật khẩu hiện tại không đúng.');
+                }
+            }
+
+            if (!empty($profile->new_password)) {
+                if ($profile->new_password === $profile->confirm_new_password) {
+                    $user->password = bcrypt($profile->new_password);
+                } else {
+                    throw new Exception('Mật khẩu mới và xác nhận mật khẩu không khớp.');
+                }
+            }
+
+            $user->save();
+
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+
+    }
 
 
 

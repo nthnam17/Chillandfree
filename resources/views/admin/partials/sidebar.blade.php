@@ -19,22 +19,21 @@
             </a>
         </li>
         
-        {{-- <li class="nav-item">
+        <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-topic" aria-expanded="false" aria-controls="ui-topic">
-                <i class="fa fa-book" aria-hidden="true"></i>
-                <span class="menu-title pl-3">Quản lý chủ đề</span>
+                <i class="fa fa-list" aria-hidden="true"></i>
+                <span class="menu-title pl-3">Quản lý Danh mục</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="ui-topic">
                 <ul class="nav flex-column sub-menu">
 
                     <li class="nav-item items-small-menu">
-                        <a class="nav-link nav-item-drop" href="{{ url('/admin/topic/list') }}">Danh sách chủ đề</a>
+                        <a class="nav-link nav-item-drop" href="{{ url('/admin/category/list') }}">Danh sách danh mục</a>
                     </li>
-
                 </ul>
             </div>
-        </li> --}}
+        </li>
         {{-- <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-lookup" aria-expanded="false" aria-controls="ui-lookup">
                 <i class="fa fa-university" aria-hidden="true"></i>

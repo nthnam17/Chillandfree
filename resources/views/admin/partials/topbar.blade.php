@@ -108,12 +108,19 @@
                     @endif
                 </div>
                 <a
-                    class="nav-link dropdown-toggle"
+                    class="nav-link dropdown-toggle ml-2"
                     href="#"
                     data-toggle="dropdown"
                     id="profileDropdown"
                 >
-                    <img src="{{ url('/admin/image/boy.png') }}" alt="profile" />
+                    @php
+                        if(auth()->user()->image !== null) {
+                           $img = auth()->user()->image;
+                        }else {
+                            $img = '/admin/image/boy.png';
+                        }
+                    @endphp
+                    <img src="{{ url($img) }}" alt="profile" />
                 </a>
                 
                 <div

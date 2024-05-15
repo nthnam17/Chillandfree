@@ -9,8 +9,8 @@ use App\Models\Role;
     <style>
         .btn-show-pass {
             position: absolute;
-            bottom: 8px;
-            right: 25px;
+            top: 15px;
+            right: 15px;
         }
     </style>
     <div class="container-fluid pd-form">
@@ -37,18 +37,16 @@ use App\Models\Role;
                                                                 </div>
                                                                     @php 
                                                                         if(isset($data)) {
-                                                                            $img = $data['img'];
+                                                                            $img = $data['image'];
                                                                         }else {
                                                                             $img = '/admin/image/boy.png';
                                                                         }
                                                                     @endphp
                                                                    
-                                                                    <img src="{{ $img }}" width="150" alt="" id="image"
+                                                                    <img src="{{$img}}" width="150" alt="" id="image"
                                                                     name="image"
                                                                     group="data">
-                                                                {{-- <a class="btn_remove_image" title="Remove image" img-remove="image">
-                                                                    <i class="fa fa-times"></i>
-                                                                </a> --}}
+                                                               
                                                             </div>
                                                         </div>
                                                     </div>
@@ -94,16 +92,6 @@ use App\Models\Role;
                                                                            value="{!! isset($data) ? $data['username'] : null !!}">
 
                                                                 </div>
-                                                                <div class="form-group col-md-6 d-none" >
-                                                                    <label for="first_name"
-                                                                           class="control-label required">Tài khoản đăng
-                                                                        nhập</label>
-                                                                    <input class="form-control" data-counter="30"
-                                                                           name="phone" type="text"
-                                                                           readonly
-                                                                           value="{!! isset($data) ? $data['phone'] : null !!}">
-
-                                                                </div>
                                                                 <div class="form-group col-md-6">
                                                                     <label for="email" class="control-label required">Email</label>
                                                                     <input class="form-control form-input " data-field="email" onkeydown="validatePassword(event)" lang="en"
@@ -112,6 +100,15 @@ use App\Models\Role;
                                                                            id="email"
                                                                            value="{!! isset($data) ? $data['email'] : null !!}">
                                                                     <div class="err-input error-message" data-field="email"></div>
+                                                                </div>
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="email" class="control-label required">Số diện thoại</label>
+                                                                    <input class="form-control form-input " data-field="email" lang="en"
+                                                                           placeholder="Ex: 0333279xxx"
+                                                                           data-counter="60" name="phone" type="text"
+                                                                           id="phone"
+                                                                           value="{!! isset($data) ? $data['phone'] : null !!}">
+                                                                    {{-- <div class="err-input error-message" data-field="email"></div> --}}
                                                                 </div>
                                                                 <div class="clearfix"></div>
                                                                 <div class="form-group col-12">
@@ -285,15 +282,15 @@ use App\Models\Role;
                 let _token = $('meta[name="csrf-token"]').attr('content');
                 let txtId = $("input[name='txtId']").val();
                 let txtName = $("input[name='name']").val();
-                let txtUserName = $("input[name='username']").val();
                 let txtEmail = $("input[name='email']").val();
                 let txtPhone = $("input[name='phone']").val();
+                let txtImg = $("img[name='image']").attr('src');
 
                 let data = {
                     "_token": _token,
                     "id": txtId,
                     "name": txtName,
-                    "username": txtUserName,
+                    "image": txtImg,
                     "email": txtEmail,
                     "phone": txtPhone,
                 };

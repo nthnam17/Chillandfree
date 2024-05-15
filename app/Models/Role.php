@@ -37,6 +37,7 @@ class Role extends Model {
              Artisan::call('cache:clear');
              Artisan::call('config:cache');
          } catch (\Exception $ex) {
+                dd($ex);
              throw $ex;
          }
 //        try {

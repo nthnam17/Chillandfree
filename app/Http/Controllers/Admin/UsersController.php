@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
+use App\Http\Requests\Admin\PasswordRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Lang;
@@ -16,7 +17,7 @@ class UsersController extends Controller
 
 {
     public function __construct() {
-        $this->middleware(['isAdmin'])->except('getOne','getProfile');
+        $this->middleware(['isAdmin'])->except('getOne','getProfile','editProfile','editPassword');
     }
 
     /**
@@ -106,4 +107,34 @@ class UsersController extends Controller
         $data = User::getUserById($user_id);
         return view('admin.settings.profile',['data' => $data]);
     }
+
+    public function editProfile(UserRequest $request) {
+        try {
+            //validator
+            if (isset($request->validator) && $request->validator->fails()) {
+                return response_json(0, "", "danger", null, $request->validator->errors());
+            }
+
+            User::editProfile($request);
+
+            return response_json(200, Lang::get('global.msg_edit_success'), Lang::get('global.notify_success'));
+        } catch (\Exception $ex) {
+            return response_json(0, Lang::get('global.msg_error'), Lang::get('global.notify_danger'), null, $ex);
+        }
+    }
+
+    public function editPassword(PasswordRequest $request) {
+        try {
+            //validator
+            if (isset($request->validator) && $request->validator->fails()) {
+                return response_json(0, "", "danger", null, $request->validator->errors());
+            }
+            User::editPassword($request);
+
+            return response_json(200, Lang::get('global.msg_edit_success'), Lang::get('global.notify_success'));
+        } catch (\Exception $ex) {
+            return response_json(0,  Lang::get('global.msg_error'), Lang::get('global.notify_danger'));
+        }
+    }
+
 }
