@@ -63,6 +63,11 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
 
     Route::group(['prefix' => 'category'], function () {
         Route::get('/list', [App\Http\Controllers\Admin\CategoryController::class, 'getList']);
+        Route::get('/get', [App\Http\Controllers\Admin\CategoryController::class, 'getOne']);
+        Route::get('/getParent', [App\Http\Controllers\Admin\CategoryController::class, 'getParent']);
+        Route::post('/add', [App\Http\Controllers\Admin\CategoryController::class, 'insertOne']);
+        Route::post('/edit', [App\Http\Controllers\Admin\CategoryController::class, 'editOne']);
+        Route::post('/delete', [App\Http\Controllers\Admin\CategoryController::class, 'deleteOne']);
     });
 });
 

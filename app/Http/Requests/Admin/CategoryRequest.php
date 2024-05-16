@@ -27,8 +27,8 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'name' => 'required', 'min:3', 'max:100',
-            'slug' => 'nullable|unique:permissions,slug,' . $this->id,
+            'name' => 'required|min:3|max:100|unique:category,slug,' . $this->id,
+            'slug' => 'unique:category,slug,' . $this->id,
         ];
 
         return $rules;
@@ -37,11 +37,10 @@ class CategoryRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Chưa nhập tên!',
-            'slug.unique' => 'Slug đã tồn tại',
+            'name.required' => 'Vui lòng nhập tên danh mục!',
+            'slug.unique' => 'Slug đã tồn tại!',
             'name.min'             => 'Tên phải có độ dài ít nhất 3 ký tự!',
             'name.max'             => 'Tên phải có độ dài không vượt quá 50 ký tự!',
-
         ];
     }
 

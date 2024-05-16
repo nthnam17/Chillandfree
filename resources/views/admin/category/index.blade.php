@@ -218,7 +218,7 @@ $permission = Permission::where('slug', $url)->first();
                         </div>
                         <div class="form-group">
                             <label for="first_name" class="control-label">Sắp xếp</label>
-                            <input group="data" class="form-control" name="order" type="number" spellcheck="false">
+                            <input group="data" class="form-control" name="position" type="number" spellcheck="false">
                         </div>
                         <div class="form-group">
                             <label class="control-label">Trạng thái</label>
@@ -252,7 +252,7 @@ $permission = Permission::where('slug', $url)->first();
                 urlAddModelToDb: "/admin/category/add",
                 urlUpdateModelToDb: "/admin/category/edit",
                 urlDeleteModelToDb: "/admin/category/delete",
-                // urlGetParentPer: "/admin/category/parentPer",
+                urlGetParentPer: "/admin/category/getParent",
                 titleModalAdd: "Thêm mới danh mục",
                 titleModalEdit: "cập nhập danh mục",
 

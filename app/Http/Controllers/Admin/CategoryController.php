@@ -5,6 +5,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CategoryRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Category;
@@ -19,7 +20,7 @@ class CategoryController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['isAdmin'])->except('editOne');
+        $this->middleware(['isAdmin'])->except('getParent','getOne');
     }
     /**
 
@@ -48,68 +49,69 @@ class CategoryController extends Controller
         }
     }
 
-    // public function addPermission(PermissionRequest $request)
-    // {
-    //     try {
-    //         //validator
-    //         if (isset($request->validator) && $request->validator->fails()) {
-    //             return response_json(0, "", Lang::get('global.notify_danger'), null, $request->validator->errors());
-    //         }
+    public function insertOne(CategoryRequest $request)
+    {
+        try {
+            //validator
+            if (isset($request->validator) && $request->validator->fails()) {
+                return response_json(0, "", Lang::get('global.notify_danger'), null, $request->validator->errors());
+            }
+            Category::insertOne($request);
 
-    //         Permission::insertPermission($request);
+            return response_json(200, Lang::get('global.msg_add_success'), Lang::get('global.notify_success'));
+        } catch (Exception $ex) {
+            dd($ex);
+            return response_json(0,  Lang::get('global.msg_error'), Lang::get('global.notify_danger'));
+        }
+    }
 
-    //         return response_json(200, Lang::get('global.msg_add_success'), Lang::get('global.notify_success'));
-    //     } catch (Exception $ex) {
-    //         dd($ex);
-    //         return response_json(0,  Lang::get('global.msg_error'), Lang::get('global.notify_danger'));
-    //     }
-    // }
 
-    // public function editOne(PermissionRequest $request)
-    // {
 
-    //     try {
-    //         //validator
-    //         if (isset($request->validator) && $request->validator->fails()) {
-    //             return response_json(0, "", Lang::get('global.notify_danger'), null, $request->validator->errors());
-    //         }
+    public function editOne(CategoryRequest $request)
+    {
 
-    //         Permission::updatePermission($request);
+        try {
+            //validator
+            if (isset($request->validator) && $request->validator->fails()) {
+                return response_json(0, "", Lang::get('global.notify_danger'), null, $request->validator->errors());
+            }
 
-    //         return response_json(200, Lang::get('global.msg_edit_success'), Lang::get('global.notify_success'));
-    //     } catch (Exception $ex) {
-    //         return response_json(0, Lang::get('global.msg_error'), Lang::get('global.notify_danger'));
-    //     }
-    // }
+            Category::updateOne($request);
 
-    // public function delPermission(Request $request)
-    // {
-    //     try {
-    //         Permission::deletePermission($request->id);
+            return response_json(200, Lang::get('global.msg_edit_success'), Lang::get('global.notify_success'));
+        } catch (Exception $ex) {
+            dd($ex);
+            return response_json(0, Lang::get('global.msg_error'), Lang::get('global.notify_danger'));
+        }
+    }
 
-    //         return response_json(200,  Lang::get('global.msg_delete_success'), Lang::get('global.notify_success'));
-    //     } catch (Exception $ex) {
-    //         return response_json(0, Lang::get('global.msg_error'), Lang::get('global.notify_danger'));
-    //     }
-    // }
+    public function deleteOne(Request $request)
+    {
+        try {
+            $permission = Category::deleteOne($request->id);
+            return response_json(200, "", "", $permission);
+        } catch (Exception $ex) {
+            return response_json(0, Lang::get('global.msg_error'), Lang::get('global.notify_danger'), null, $ex);
+        }
+    }
 
-    // public function getOne(Request $request)
-    // {
-    //     try {
-    //         $permission = Permission::findPermission($request->id);
-    //         return response_json(200, "", "", $permission);
-    //     } catch (Exception $ex) {
-    //         return response_json(0, Lang::get('global.msg_error'), Lang::get('global.notify_danger'), null, $ex);
-    //     }
-    // }
+    public function getOne(Request $request)
+    {
+        try {
+            $data = Category::findCategory($request->id);
+            return response_json(200, "", "", $data);
+        } catch (Exception $ex) {
+            return response_json(0, Lang::get('global.msg_error'), Lang::get('global.notify_danger'), null, $ex);
+        }
+    }
 
-    // public function parentPer()
-    // {
-    //     try {
-    //         $permission = Permission::findParentId(0);
-    //         return response_json(200, "", "", $permission);
-    //     } catch (Exception $ex) {
-    //         return response_json(0, Lang::get('global.msg_error'), Lang::get('global.notify_danger'), null, $ex);
-    //     }
-    // }
+    public function getParent()
+    {
+        try {
+            $data = Category::findParentId(0);
+            return response_json(200, "", "", $data);
+        } catch (Exception $ex) {
+            return response_json(0, Lang::get('global.msg_error'), Lang::get('global.notify_danger'), null, $ex);
+        }
+    }
 }
