@@ -34,8 +34,8 @@ class Role extends Model {
              $role->update($request->except('permission'));
              $permissions = $request->input('permission') ? $request->input('permission') : [];
              $role->syncPermissions($permissions);
-             Artisan::call('cache:clear');
-             Artisan::call('config:cache');
+            //  Artisan::call('cache:clear');
+            //  Artisan::call('config:cache');
          } catch (\Exception $ex) {
                 dd($ex);
              throw $ex;

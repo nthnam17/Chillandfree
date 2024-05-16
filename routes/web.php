@@ -30,6 +30,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
         Route::get('/profile', [App\Http\Controllers\Admin\UsersController::class, 'getProfile']);
         Route::post('/editProfile', [App\Http\Controllers\Admin\UsersController::class, 'editProfile']);
         Route::post('/editPassword', [App\Http\Controllers\Admin\UsersController::class, 'editPassword']);
+        Route::get('/general', [App\Http\Controllers\Admin\GeneralController::class, 'getOne']);
+        Route::post('/editGeneral', [App\Http\Controllers\Admin\GeneralController::class, 'updateUser']);
     });
 
     // system roles
@@ -61,6 +63,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
         Route::post('reset', [App\Http\Controllers\Admin\UsersController::class, 'delresetPasswordUser']);
     });
 
+    // category
     Route::group(['prefix' => 'category'], function () {
         Route::get('/list', [App\Http\Controllers\Admin\CategoryController::class, 'getList']);
         Route::get('/get', [App\Http\Controllers\Admin\CategoryController::class, 'getOne']);
